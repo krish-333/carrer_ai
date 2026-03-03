@@ -10,19 +10,51 @@ export default async function handler(req, res) {
   const jobRes = await fetch("https://remotive.com/api/remote-jobs");
   const jobData = await jobRes.json();
 
-  const job = jobData.jobs[0];
+  const filteredJobs = jobData.jobs.slice(0, 5);
 
-  const completion = await openai.chat.completions.create({
-    model: "gpt-4.1",
-    messages: [
-      { role: "system", content: "You are an expert recruiter." },
-      { role: "user", content: `Analyze this job: ${job.title}` }
-    ],
-  });
+  let results = [];
 
-  res.status(200).json({
-    message: "Success",
-    job: job.title,
-    ai: completion.choices[0].message.content
-  });
+  for (let job of filteredJobs) {
+
+    const prompt = `
+You are an elite AI Career Strategist.
+
+Candidate:
+Early career in Data/Analytics/AI roles.
+Location: India or Remote.
+
+Analyze:
+
+Title: ${job.title}
+Company: ${job.company_name}
+Description: ${job.description.slice(0, 1000)}
+
+Return structured response:
+
+MATCH_SCORE:
+WHY_STRONG_FIT:
+SKILL_GAPS:
+WHY_JOIN_ANSWER (120 words):
+COVER_LETTER (150 words):
+RESUME_KEYWORDS_TO_ADD:
+`;
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4.1",
+      messages: [
+        { role: "system", content: "You are a professional recruiter." },
+        { role: "user", content: prompt }
+      ],
+      temperature: 0.7
+    });
+
+    results.push({
+      company: job.company_name,
+      title: job.title,
+      url: job.url,
+      analysis: completion.choices[0].message.content
+    });
+  }
+
+  res.status(200).json(results);
 }
