@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #0f0f0f, #1a0026);
+  background: linear-gradient(135deg, #0a0a0f, #20002c);
   color: white;
 }
 
@@ -20,7 +20,7 @@ button {
   color: white;
   border: none;
   padding: 12px 25px;
-  font-size: 16px;
+  margin: 10px;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s;
@@ -30,16 +30,23 @@ button:hover {
   background: #9333ea;
 }
 
-pre {
-  margin-top: 30px;
+.secondary {
+  background: #333;
+}
+
+.job-card {
   background: #111;
+  border: 1px solid #7c3aed;
   padding: 20px;
+  margin: 20px auto;
+  max-width: 800px;
   border-radius: 10px;
   text-align: left;
+}
+
+pre {
   white-space: pre-wrap;
-  max-height: 600px;
-  overflow-y: auto;
-  border: 1px solid #7c3aed;
+  margin-top: 10px;
 }
 
 .hidden {
