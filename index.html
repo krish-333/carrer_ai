@@ -6,14 +6,17 @@
 </head>
 <body>
 
-  <h1>🚀 Career Agent AI</h1>
-  <p>Click below to find best jobs for you.</p>
+  <div class="container">
+    <h1>🚀 Career Agent AI</h1>
+    <p>Your Autonomous Career Strategist</p>
 
-  <button onclick="runAgent()">Find Jobs</button>
+    <button onclick="runAgent()">Find Best Jobs</button>
 
-  <pre id="output"></pre>
+    <div id="loading" class="hidden">Analyzing jobs...</div>
+
+    <pre id="output"></pre>
+  </div>
 
   <script src="script.js"></script>
-
 </body>
 </html>
