@@ -17,7 +17,7 @@ async function runAgent() {
       <h2>${job.company}</h2>
       <h3>${job.title}</h3>
       <a href="${job.url}" target="_blank">Apply Link</a>
-      <pre>${job.aiAnalysis}</pre>
+      <pre>${job.analysis}</pre>
       <button onclick='saveJob(${JSON.stringify(job)})'>Save Job</button>
     `;
 
@@ -26,12 +26,33 @@ async function runAgent() {
 }
 
 async function saveJob(job) {
-
-  await fetch("/api/saveJob", {
+  await fetch("/api/save", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(job)
   });
 
-  alert("Job saved!");
+  alert("Saved!");
+}
+
+async function loadSaved() {
+
+  const res = await fetch("/api/getSaved");
+  const jobs = await res.json();
+
+  document.getElementById("results").innerHTML = "";
+
+  jobs.forEach(job => {
+
+    const div = document.createElement("div");
+    div.className = "job-card";
+
+    div.innerHTML = `
+      <h2>${job.company}</h2>
+      <h3>${job.title}</h3>
+      <pre>${job.analysis}</pre>
+    `;
+
+    document.getElementById("results").appendChild(div);
+  });
 }
