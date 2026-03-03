@@ -1,11 +1,11 @@
 async function runAgent() {
 
-  document.getElementById("output").textContent =
-    "Searching jobs...";
+  document.getElementById("loading").classList.remove("hidden");
+  document.getElementById("output").textContent = "";
 
-  const response = await fetch("/api/agent");
-  const data = await response.json();
+  const res = await fetch("/api/agent");
+  const data = await res.json();
 
-  document.getElementById("output").textContent =
-    data.result;
+  document.getElementById("loading").classList.add("hidden");
+  document.getElementById("output").textContent = data.result;
 }
